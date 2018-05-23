@@ -1,4 +1,4 @@
-package com.service;
+package com.example.springbootsoaphospital;
 
 import com.hospital.doctors.Doctor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.config;
+package com.example.springbootsoaphospital;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +30,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("doctors.xsd"));
     }
 
-    @Bean
+    @Bean(name = "doctors")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema doctorsSchema) {
 
         DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
