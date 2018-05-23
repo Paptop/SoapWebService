@@ -1,0 +1,48 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://hospital.com/doctors"
+           targetNamespace="http://hospital.com/doctors" elementFormDefault="qualified">
+
+        <xs:element name="getDoctorRequest">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="id" type="xs:long" />
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+
+        <xs:element name="getDoctorResponse">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:element name="doctor" type="tns:doctor" />
+                        </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+        <xs:element name="createDoctorRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="surname" type="xs:string"/>
+                        <xs:element name="speciality" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+        </xs:element>
+
+
+        <xs:element name="createDoctorResponse">
+            <xs:complexType>
+                <xs:sequence>
+                   <xs:element name="doctor" type="tns:doctor"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+    <xs:complexType name="doctor">
+        <xs:sequence>
+           <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="surname" type="xs:string"/>
+            <xs:element name="speciality" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

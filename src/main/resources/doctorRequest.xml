@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:us="http://hospital.com/doctors">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <us:getDoctorRequest>
+            <us:id>1</us:id>
+        </us:getDoctorRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
