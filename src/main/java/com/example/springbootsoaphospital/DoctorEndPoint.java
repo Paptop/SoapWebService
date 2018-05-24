@@ -26,13 +26,17 @@ public class DoctorEndPoint {
 
     @Autowired
     private DoctorService doctorService;
+    private PostService postService = new PostService();
     private final String URL_NP = "http://hospital.com/doctors";
     private RestTemplate restTemplate = new RestTemplate();
 
 
-    private final String URL= "http://userspostscomments_app_1:80/api/users";
-    private final String DEBUG_URL_USERS= "http://0.0.0.0:80/api/users";
-    private final String DEBUG_URL_POSTS= "http://0.0.0.0:80/api/posts";
+    private final String URL_USERS= "http://userspostscomments_app_1:80/api/users";
+    private final String URL_POSTS= "http://userspostscomments_app_1:80/api/posts";
+    private final String URL_COMMENTS= "http://userspostscomments_app_1:80/api/comments";
+    //private final String DEBUG_URL_USERS= "http://0.0.0.0:80/api/users";
+    //private final String DEBUG_URL_POSTS= "http://0.0.0.0:80/api/posts";
+    //private final String DEBUG_URL_COMMENTS="http://0.0.0.0:80/api/comments";
 
     private Doctor createDoctor(long id, String name, String surname, String speciality){
         Doctor doc = new Doctor();
@@ -95,7 +99,7 @@ public class DoctorEndPoint {
         user.setUsername(newDoctor.getName().concat(newDoctor.getSurname()));
         HttpEntity<User> newRequest = new HttpEntity<>(user);
         try {
-            ResponseEntity<User> userResponse = restTemplate.exchange(DEBUG_URL_USERS, HttpMethod.POST, newRequest, User.class);
+            ResponseEntity<User> userResponse = restTemplate.exchange(URL_USERS, HttpMethod.POST, newRequest, User.class);
             newDoctor.setUserId(userResponse.getBody().getId());
             newDoctor.setUser(userResponse.getBody());
             doctorService.createDoctor(newDoctor,isPresent);
@@ -153,7 +157,12 @@ public class DoctorEndPoint {
                if(request.getBody() == null) request.setBody("New body");
                Post post = createPost(request.getTitle(), request.getBody(), doc.getUserId());
                Post finalPost = createExternalPost(post);
-               if(finalPost!= null) doc.getPosts().add(finalPost);
+               finalPost.getId();
+               if(finalPost!= null){
+                   postService.addPost(finalPost);
+                   doc.getPosts().add(finalPost);
+                   response.setPost(finalPost);
+               }
                return response;
             }else{
                // Throw registerEntityFirst exception;
@@ -171,6 +180,14 @@ public class DoctorEndPoint {
         return post;
     }
 
+    private Comment createComment(String body, long userId, long postId){
+       Comment com = new Comment();
+       com.setPostId(postId);
+       com.setUserId(userId);
+       com.setBody(body);
+       return com;
+    }
+
     private Doctor createUserBasedOnDoctor(Doctor doc){
 
         User user = new User();
@@ -178,7 +195,7 @@ public class DoctorEndPoint {
         user.setUsername(doc.getName().concat(doc.getSurname()));
         HttpEntity<User> newRequest = new HttpEntity<>(user);
         try {
-            ResponseEntity<User> userResponse = restTemplate.exchange(DEBUG_URL_USERS, HttpMethod.POST, newRequest, User.class);
+            ResponseEntity<User> userResponse = restTemplate.exchange(URL_USERS, HttpMethod.POST, newRequest, User.class);
             doc.setUserId(userResponse.getBody().getId());
             doc.setUser(userResponse.getBody());
             return doc;
@@ -195,12 +212,57 @@ public class DoctorEndPoint {
     private Post createExternalPost(Post post){
         HttpEntity<Post> newRequest = new HttpEntity<>(post);
         try {
-            ResponseEntity<Post> postResponse = restTemplate.exchange(DEBUG_URL_POSTS, HttpMethod.POST, newRequest, Post.class);
+            ResponseEntity<Post> postResponse = restTemplate.exchange(URL_POSTS, HttpMethod.POST, newRequest, Post.class);
             return postResponse.getBody();
         }catch(RestClientException exc){
             if(exc.getMessage().equals("409 null")){
                 //throw new ResourceConflict409("User","username",user.getUsername());
                 return null;
+            }else{
+                throw new SoapHeaderException("Internal Error");
+            }
+        }
+    }
+
+    @PayloadRoot(namespace = URL_NP, localPart = "createCommentForDoctorRequest")
+    @ResponsePayload
+    public CreateCommentForDoctorResponse createCommentForDoctor(@RequestPayload CreateCommentForDoctorRequest request){
+       CreateCommentForDoctorResponse response = new CreateCommentForDoctorResponse();
+       Doctor doc = doctorService.getDoctor(request.getId());
+        if(doc == null)
+            throw new ResourceNotFoundException404("Doctor", "id",request.getId());
+        else{
+            if(doc.getUserId() != 0) {
+                Post p = postService.getPost(request.getPostId());
+                if (p == null)
+                    throw new ResourceNotFoundException404("Post", "id", request.getPostId());
+                else {
+                    Comment finalComment = createExternalComment(createComment(
+                            request.getBody(),
+                            doc.getUserId(),
+                            request.getPostId()
+                    ));
+                    p.getComment().add(finalComment);
+                    doc.getComments().add(finalComment);
+                    response.setComment(finalComment);
+                    return response;
+                }
+            }else{
+                throw new ResourceRegisterFirstException("Doctor","id",String.valueOf(doc.getId()),"user");
+            }
+        }
+    }
+
+
+
+    public Comment createExternalComment(Comment comment){
+        HttpEntity<Comment> newRequest = new HttpEntity<>(comment);
+        try {
+            ResponseEntity<Comment> commentResponse = restTemplate.exchange(URL_COMMENTS, HttpMethod.POST, newRequest, Comment.class);
+            return commentResponse.getBody();
+        }catch(RestClientException exc){
+            if(exc.getMessage().equals("409 null")){
+                throw new ResourceConflict409("Comment","username",comment.getUserId());
             }else{
                 throw new SoapHeaderException("Internal Error");
             }
