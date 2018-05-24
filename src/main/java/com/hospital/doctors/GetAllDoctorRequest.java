@@ -10,7 +10,6 @@ package com.hospital.doctors;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="doctor" type="{http://hospital.com/doctors}doctor"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,37 +33,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "doctor"
-})
-@XmlRootElement(name = "getDoctorResponse")
-public class GetDoctorResponse {
+@XmlType(name = "")
+@XmlRootElement(name = "getAllDoctorRequest")
+public class GetAllDoctorRequest {
 
-    @XmlElement(required = true)
-    protected Doctor doctor;
-
-    /**
-     * Gets the value of the doctor property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Doctor }
-     *     
-     */
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    /**
-     * Sets the value of the doctor property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Doctor }
-     *     
-     */
-    public void setDoctor(Doctor value) {
-        this.doctor = value;
-    }
 
 }

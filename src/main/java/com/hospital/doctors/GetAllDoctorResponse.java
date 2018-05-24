@@ -8,6 +8,8 @@
 
 package com.hospital.doctors;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="doctor" type="{http://hospital.com/doctors}doctor"/>
+ *         &lt;element name="doctors" type="{http://hospital.com/doctors}doctor" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "doctor"
+    "doctors"
 })
-@XmlRootElement(name = "getDoctorResponse")
-public class GetDoctorResponse {
+@XmlRootElement(name = "getAllDoctorResponse")
+public class GetAllDoctorResponse {
 
     @XmlElement(required = true)
-    protected Doctor doctor;
+    protected List<Doctor> doctors;
 
     /**
-     * Gets the value of the doctor property.
+     * Gets the value of the doctors property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Doctor }
-     *     
-     */
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    /**
-     * Sets the value of the doctor property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the doctors property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Doctor }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDoctors().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Doctor }
+     * 
+     * 
      */
-    public void setDoctor(Doctor value) {
-        this.doctor = value;
+    public List<Doctor> getDoctors() {
+        if (doctors == null) {
+            doctors = new ArrayList<Doctor>();
+        }
+        return this.doctors;
     }
 
 }

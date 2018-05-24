@@ -18,12 +18,63 @@
                 </xs:complexType>
         </xs:element>
 
+        <xs:element name="getAllDoctorRequest">
+            <xs:complexType>
+                <xs:sequence/>
+            </xs:complexType>
+        </xs:element>
+
+
+        <xs:element name="getAllDoctorResponse">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="doctors" maxOccurs="unbounded" type="tns:doctor" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+
+        <xs:element name="deleteDoctorRequest">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="deleteDoctorResponse">
+            <xs:complexType>
+                <xs:sequence/>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="updateDoctorRequest">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="surname" type="xs:string"/>
+                    <xs:element name="speciality" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="updateDoctorResponse">
+            <xs:complexType>
+                <xs:sequence>
+                   <xs:element name="doctor" type="tns:doctor"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
         <xs:element name="createDoctorRequest">
                 <xs:complexType>
                     <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
                         <xs:element name="name" type="xs:string"/>
                         <xs:element name="surname" type="xs:string"/>
                         <xs:element name="speciality" type="xs:string"/>
+                        <xs:element name="userId" type="xs:long"/>
                     </xs:sequence>
                 </xs:complexType>
         </xs:element>
@@ -37,12 +88,66 @@
             </xs:complexType>
         </xs:element>
 
+        <xs:element name="registerDoctorAsUserRequest">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="registerDoctorAsUserResponse">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="doctor" type="tns:doctor"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="createPostForDoctorRequest">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="title" type="xs:string"/>
+                    <xs:element name="body"  type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="createPostForDoctorResponse">
+           <xs:complexType>
+               <xs:sequence>
+               </xs:sequence>
+           </xs:complexType>
+        </xs:element>
+
     <xs:complexType name="doctor">
         <xs:sequence>
            <xs:element name="id" type="xs:long"/>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="surname" type="xs:string"/>
             <xs:element name="speciality" type="xs:string"/>
+            <xs:element name="userId" type="xs:long"/>
+            <xs:element name="user" type="tns:user"/>
+            <xs:element name="posts" maxOccurs="unbounded" type="tns:post" />
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="username" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="post">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="body" type="xs:string"/>
+            <xs:element name="userId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
 </xs:schema>

@@ -8,21 +8,20 @@
 
 package com.hospital.doctors;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for doctor complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="doctor">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -30,9 +29,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="surname" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="speciality" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="user" type="{http://hospital.com/doctors}user"/>
- *         &lt;element name="posts" type="{http://hospital.com/doctors}post" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,16 +38,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "doctor", propOrder = {
+@XmlType(name = "", propOrder = {
     "id",
     "name",
     "surname",
-    "speciality",
-    "userId",
-    "user",
-    "posts"
+    "speciality"
 })
-public class Doctor {
+@XmlRootElement(name = "updateDoctorRequest")
+public class UpdateDoctorRequest {
 
     protected long id;
     @XmlElement(required = true)
@@ -60,11 +54,6 @@ public class Doctor {
     protected String surname;
     @XmlElement(required = true)
     protected String speciality;
-    protected long userId;
-    @XmlElement(required = true)
-    protected User user;
-    @XmlElement(required = true)
-    protected List<Post> posts;
 
     /**
      * Gets the value of the id property.
@@ -152,75 +141,6 @@ public class Doctor {
      */
     public void setSpeciality(String value) {
         this.speciality = value;
-    }
-
-    /**
-     * Gets the value of the userId property.
-     * 
-     */
-    public long getUserId() {
-        return userId;
-    }
-
-    /**
-     * Sets the value of the userId property.
-     * 
-     */
-    public void setUserId(long value) {
-        this.userId = value;
-    }
-
-    /**
-     * Gets the value of the user property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link User }
-     *     
-     */
-    public User getUser() {
-        return user;
-    }
-
-    /**
-     * Sets the value of the user property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link User }
-     *     
-     */
-    public void setUser(User value) {
-        this.user = value;
-    }
-
-    /**
-     * Gets the value of the posts property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the posts property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPosts().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Post }
-     * 
-     * 
-     */
-    public List<Post> getPosts() {
-        if (posts == null) {
-            posts = new ArrayList<Post>();
-        }
-        return this.posts;
     }
 
 }

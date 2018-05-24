@@ -10,7 +10,6 @@ package com.hospital.doctors;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="doctor" type="{http://hospital.com/doctors}doctor"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "doctor"
+    "id"
 })
-@XmlRootElement(name = "getDoctorResponse")
-public class GetDoctorResponse {
+@XmlRootElement(name = "deleteDoctorRequest")
+public class DeleteDoctorRequest {
 
-    @XmlElement(required = true)
-    protected Doctor doctor;
+    protected long id;
 
     /**
-     * Gets the value of the doctor property.
+     * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Doctor }
-     *     
      */
-    public Doctor getDoctor() {
-        return doctor;
+    public long getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the doctor property.
+     * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Doctor }
-     *     
      */
-    public void setDoctor(Doctor value) {
-        this.doctor = value;
+    public void setId(long value) {
+        this.id = value;
     }
 
 }
