@@ -1,6 +1,5 @@
 package com.example.springbootsoaphospital;
 
-import com.example.springbootsoaphospital.Exceptions.ResourceNotFoundException404;
 import com.hospital.doctors.Doctor;
 import org.springframework.stereotype.Service;
 
@@ -68,9 +67,6 @@ public class DoctorService {
 
     public void updateDoctor(Doctor updateFields){
         Doctor doc = doctors.get(updateFields.getId());
-        updateFields.getName();
-        updateFields.getSpeciality();
-        updateFields.getSurname();
         if(updateFields.getName() != null)
             doc.setName(updateFields.getName());
         if(updateFields.getSurname() != null) doc.setSurname(updateFields.getSurname());

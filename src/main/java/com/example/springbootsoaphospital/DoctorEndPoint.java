@@ -30,12 +30,11 @@ public class DoctorEndPoint {
     private RestTemplate restTemplate = new RestTemplate();
 
 
-    private String URL= "http://userspostscomments_app_1:80/api/users";
+    private final String URL= "http://userspostscomments_app_1:80/api/users";
+    private final String DEBUG_URL_USERS= "http://0.0.0.0:80/api/users";
+    private final String DEBUG_URL_POSTS= "http://0.0.0.0:80/api/posts";
 
-    private String DEBUG_URL_USERS= "http://0.0.0.0:80/api/users";
-    private String DEBUG_URL_POSTS= "http://0.0.0.0:80/api/posts";
-
-    public Doctor createDoctor(long id, String name, String surname, String speciality){
+    private Doctor createDoctor(long id, String name, String surname, String speciality){
         Doctor doc = new Doctor();
         doc.setId(id);
         doc.setSurname(surname);
@@ -164,7 +163,7 @@ public class DoctorEndPoint {
     }
 
 
-    public Post createPost(String title, String body, long userId){
+    private Post createPost(String title, String body, long userId){
         Post post = new Post();
         post.setBody(body);
         post.setTitle(title);
@@ -172,7 +171,7 @@ public class DoctorEndPoint {
         return post;
     }
 
-    public Doctor createUserBasedOnDoctor(Doctor doc){
+    private Doctor createUserBasedOnDoctor(Doctor doc){
 
         User user = new User();
         user.setEmail(doc.getName().concat(doc.getSurname()).concat("@VilniusHospital.com"));
@@ -193,7 +192,7 @@ public class DoctorEndPoint {
     }
 
 
-    public Post createExternalPost(Post post){
+    private Post createExternalPost(Post post){
         HttpEntity<Post> newRequest = new HttpEntity<>(post);
         try {
             ResponseEntity<Post> postResponse = restTemplate.exchange(DEBUG_URL_POSTS, HttpMethod.POST, newRequest, Post.class);
