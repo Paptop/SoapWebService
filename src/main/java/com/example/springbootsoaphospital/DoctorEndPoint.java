@@ -63,8 +63,26 @@ public class DoctorEndPoint {
     @ResponsePayload
     public GetAllDoctorResponse getAllDoctorResponse(@RequestPayload GetAllDoctorRequest request){
        GetAllDoctorResponse response = new GetAllDoctorResponse();
+       String speciality = request.getSpeciality();
+       String name = request.getName();
        for(Map.Entry<Long,Doctor> entry : doctorService.getAllDoctors().entrySet()){
-            response.getDoctors().add(entry.getValue());
+           // Very bad code but it works !!!
+           if(speciality != null && name != null){
+                if(speciality.equals(entry.getValue().getSpeciality()) &&
+                        name.equals(entry.getValue().getName()))  {
+                    response.getDoctors().add(entry.getValue());
+                }
+            }else if( speciality == null && name != null ){
+                if(name.equals(entry.getValue().getName())) {
+                    response.getDoctors().add(entry.getValue());
+                }
+            }else if(speciality != null && name == null){
+               if(speciality.equals(entry.getValue().getSpeciality())){
+                   response.getDoctors().add(entry.getValue());
+               }
+            }else{
+               response.getDoctors().add(entry.getValue());
+           }
        }
        return response;
     }

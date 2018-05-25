@@ -20,7 +20,10 @@
 
         <xs:element name="getAllDoctorRequest">
             <xs:complexType>
-                <xs:sequence/>
+                <xs:sequence>
+                        <xs:element name="speciality" type="xs:string"/>
+                        <xs:element name="name" type="xs:string"/>
+                </xs:sequence>
             </xs:complexType>
         </xs:element>
 

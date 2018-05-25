@@ -33,7 +33,7 @@ public class DoctorService {
         nick.setId(counter++);
         nick.setName("Nick");
         nick.setSurname("Johnson");
-        nick.setSpeciality("Gastroenterologist");
+        nick.setSpeciality("Hermatologist");
         doctors.put(nick.getId(),nick);
 
         Doctor page= new Doctor();
